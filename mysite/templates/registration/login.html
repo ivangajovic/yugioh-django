@@ -1,0 +1,37 @@
+{% extends 'ygocard/base.html' %}
+
+{% block signin %}
+<div class="login-card">
+    <h1>Log-in</h1><br>
+  <form method="POST" >
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}"></input>
+      {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+          {% for error in form.non_field_errors %}
+            <p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p>
+          {% endfor %}
+          </div>
+      {% endif %}
+    <table>
+     <tr>
+         <td>{{ form.username }}</td>
+     </tr>
+     <tr>
+         <td>{{ form.password }}</td>
+     </tr>
+     </table>
+
+    <input type="submit" name="login" value="login" class="login login-submit"/>
+    <input type="hidden" name="next" value="{{ next }}"/>
+  </form>
+
+  <div class="login-help">
+    <a href="{% url 'signup' %}">Sign Up</a> • <a href="{% url 'password_reset' %}">Forgot Password</a>
+  </div>
+</div>
+
+<!-- <div id="error"><img src="https://dl.dropboxusercontent.com/u/23299152/Delete-icon.png" /> Your caps-lock is on.</div> -->
+
+  <script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
+  {% endblock %}

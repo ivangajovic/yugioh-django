@@ -1,0 +1,1 @@
+@"c:\users\alteavision23\desktop\ygocards.v2.5.1\myvenv\scripts\python.exe" "c:\users\alteavision23\desktop\ygocards.v2.5.1\myvenv\Scripts\markdown_py" %*
