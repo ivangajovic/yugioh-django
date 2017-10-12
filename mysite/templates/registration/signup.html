@@ -8,27 +8,47 @@
         </div>
     </div>
             <div>
-              <form method="POST" >
+              <form method="POST" id="new_user_form" >
               {% csrf_token %}
-              {% for field in form %}
 
-              <div>
-                {{ field.label_tag }}
+                <div>
+                  <label for="id_username">Username:</label>
                 </div>
-              <div>
-                {{ field }}
+                <div>
+                  <input type="text" name="username" maxlength="150" autofocus="" required="" id="id_username">
+                </div>
+
+                <div>
+                  <label for="id_email">Email:</label>
+                </div>
+                <div>
+                  <input type="email" name="email" maxlength="254" required="" id="id_email">
+                </div>
+
+                <div>
+                  <label for="id_password1">Password:</label>
+                </div>
+                <div>
+                  <input type="password" name="password1" required="" id="id_password1">
                 </div>
 
                 {% if field.help_text %}
                   <small>{{ field.help_text|safe }}</small><br>
                 {% endif %}
 
+                <div>
+                  <label for="id_password2">Password confirmation:</label>
+                </div>
+                <div>
+                  <input type="password" name="password2" required="" id="id_password2">
+                </div>
+
                 {% for error in field.errors %}
                   <p>{{ error }}</p>
                 {% endfor %}
 
               {% endfor %}
-              <button class="btn btn-success " type="submit">Create an Account</button>
+                <button class="btn btn-success " type="submit">Create an Account</button>
 
               </form>
               <div class="card-footer text-muted text-center">
@@ -36,5 +56,24 @@
               </div>
             </div>
 
+            <!-- AJAX SIGNUP -->
+            <script type="text/javascript"></script>
+              $(document).on('submit', '#new_user_form',function(e){
+                e.preventDefault();
 
+                $.ajax({
+                  type:'POST',
+                  url:'/signup/',
+                  data:{
+                    username:$('#id_username').val(),
+                    email:$('#id_email').val(),
+                    password1:$('#id_password1').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                  },
+                  success:function(){
+                      alert("Created New User");
+                  }
+                });
+              });
+            </script>
 {% endblock %}

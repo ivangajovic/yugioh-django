@@ -1,16 +1,19 @@
-from django.shortcuts import render, redirect
+# from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .forms import SignUpForm
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 # Create your views here.
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('card_list')
-    else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+
+        User.objects.create(
+            username = username,
+            email = email,
+            password1 = password1,
+        )
+        return HttpResponse('')
